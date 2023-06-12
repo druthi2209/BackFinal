@@ -27,5 +27,8 @@ public class User {
     private String password;
     @Size(min=10, max=10)
     private String phoneNumber;
+    @Size(min=50, max=500)
+    private String address;
+    private String role = "user";
 
 }

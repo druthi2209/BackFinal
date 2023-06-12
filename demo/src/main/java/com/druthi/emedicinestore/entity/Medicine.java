@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.Set;
 
 @Entity
 @AllArgsConstructor
@@ -26,4 +27,7 @@ public class Medicine {
     private LocalDate manufacturingDate;
     private LocalDate expiryDate;
     private Double price;
+
+    @OneToOne(mappedBy = "medicine", cascade = CascadeType.ALL)
+    private Set<CartItems> cartItemsSet;
 }

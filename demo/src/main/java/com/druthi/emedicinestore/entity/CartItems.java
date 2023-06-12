@@ -5,24 +5,21 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.boot.autoconfigure.web.WebProperties;
-
-import java.util.Set;
+import org.hibernate.annotations.Cascade;
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Builder
-public class Cart {
+public class CartItems {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long cartId;
+    private Long cartItemId;
 
-    @OneToOne
-    private User user;
-
-    @OneToMany
-    private Set<CartItems> cartItemsSet;
+    @OneToOne()
+    private Medicine medicine;
+    private  int quantity;
+    private Double price;
 }

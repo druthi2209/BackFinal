@@ -1,6 +1,8 @@
 package com.druthi.emedicinestore.serviceImpl;
 
+import com.druthi.emedicinestore.entity.Medicine;
 import com.druthi.emedicinestore.entity.User;
+import com.druthi.emedicinestore.exception.MedicineNotFoundException;
 import com.druthi.emedicinestore.exception.UserNotCreatedException;
 import com.druthi.emedicinestore.exception.UserNotFoundException;
 import com.druthi.emedicinestore.exception.UserNotUpdatedException;
@@ -9,13 +11,29 @@ import com.druthi.emedicinestore.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import java.util.List;
+
+@Service
 public class UserServiceImpl implements UserService {
 
     Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
     @Autowired
     private UserRepository userRepository;
+
+    @Override
+    public User addUser(User user) throws UserNotCreatedException {
+        User newUser = userRepository.save(user);
+        if(newUser == null){
+            logger.error("New User cannot be created!");
+            throw new UserNotCreatedException("User could not be created. Try again later! ");
+        }
+        logger.info("Added user successfully!");
+        return newUser;
+    }
+
     @Override
     public User getUserById(Long userId) throws UserNotFoundException {
         User user = userRepository.findById(userId).get();
@@ -28,14 +46,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User addUser(User user) throws UserNotCreatedException {
-        User newUser = userRepository.save(user);
-        if(newUser == null){
-            logger.error("New User cannot be created!");
-            throw new UserNotCreatedException("User could not be created. Try again later! ");
+    public List<User> getUserByName(String name) throws UserNotFoundException {
+        List<User> users = userRepository.findByName(name);
+        if(users.size() == 0){
+            logger.error("User with specified name cannot be found!");
+            throw new UserNotFoundException("User with specified name cannot be found.");
         }
-        logger.info("Added user successfully!");
-        return newUser;
+        logger.info("Found user!");
+        return users;
     }
 
     @Override
@@ -59,6 +77,9 @@ public class UserServiceImpl implements UserService {
         }
         else if(newUser.getPhoneNumber() != user.getPhoneNumber()) {
             newUser.setPhoneNumber(user.getPhoneNumber());
+        }
+        else if(newUser.getAddress() != user.getAddress()){
+            newUser.setAddress(user.getAddress());
         }
         if (newUser == user) {
             logger.error("User could not be updated!");

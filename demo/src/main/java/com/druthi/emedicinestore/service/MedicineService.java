@@ -4,9 +4,11 @@ import com.druthi.emedicinestore.entity.Medicine;
 import com.druthi.emedicinestore.exception.MedicineNotCreatedException;
 import com.druthi.emedicinestore.exception.MedicineNotFoundException;
 import com.druthi.emedicinestore.exception.MedicineNotUpdatedException;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public interface MedicineService {
     Medicine addMedicine(Medicine medicine) throws MedicineNotCreatedException;
 

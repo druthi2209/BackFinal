@@ -1,4 +1,8 @@
 package com.druthi.emedicinestore.serviceImpl;
 
-public class CartServiceImpl {
+import com.druthi.emedicinestore.service.CartService;
+import org.springframework.stereotype.Service;
+
+@Service
+public class CartServiceImpl implements CartService {
 }
