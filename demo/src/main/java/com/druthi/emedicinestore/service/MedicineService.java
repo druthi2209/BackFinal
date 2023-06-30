@@ -1,22 +1,22 @@
 package com.druthi.emedicinestore.service;
 
 import com.druthi.emedicinestore.entity.Medicine;
-import com.druthi.emedicinestore.exception.MedicineNotCreatedException;
-import com.druthi.emedicinestore.exception.MedicineNotFoundException;
-import com.druthi.emedicinestore.exception.MedicineNotUpdatedException;
+import com.druthi.emedicinestore.exception.*;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public interface MedicineService {
-    Medicine addMedicine(Medicine medicine) throws MedicineNotCreatedException;
+    Medicine addMedicine(Medicine medicine) throws EntityNotCreatedException;
 
-    Medicine findMedicineById(Long medicineId) throws MedicineNotFoundException;
+    Medicine findMedicineById(Long medicineId) throws EntityNotFoundException;
 
-    Medicine updateMedicineById(Medicine medicine, Long medicineId) throws MedicineNotFoundException, MedicineNotUpdatedException;
+    Medicine updateMedicineById(Medicine medicine, Long medicineId) throws EntityNotFoundException;
 
-    String deleteMedicineById(Long medicineId) throws MedicineNotFoundException;
+    String deleteMedicineById(Long medicineId) throws EntityCannotBeDeletedException, EntityNotFoundException;
 
-    List<Medicine> findMedicineByName(String name) throws MedicineNotFoundException;
+    List<Medicine> findMedicinesByName(String name) throws EntityNotFoundException;
+
+    List<Medicine> getAllMedicines();
 }

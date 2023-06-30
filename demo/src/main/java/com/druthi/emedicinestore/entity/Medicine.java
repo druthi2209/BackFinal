@@ -1,6 +1,7 @@
 package com.druthi.emedicinestore.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -8,7 +9,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.util.Set;
 
 @Entity
 @AllArgsConstructor
@@ -22,12 +22,11 @@ public class Medicine {
     private Long medicineId;
     @Column(unique = true)
     private String medicineName;
-    private String description;
+    private String url;
     private Long quantity;
     private LocalDate manufacturingDate;
     private LocalDate expiryDate;
     private Double price;
 
-    @OneToOne(mappedBy = "medicine", cascade = CascadeType.ALL)
-    private Set<CartItems> cartItemsSet;
+
 }

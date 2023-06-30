@@ -1,34 +1,50 @@
 package com.druthi.emedicinestore.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+//import org.springframework.security.core.GrantedAuthority;
+
+import java.util.List;
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+//@Data
+@Getter
+@Setter
+@EqualsAndHashCode
 @Builder
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
+
     private String name;
+
     @Column(unique = true)
     private String userName;
+
     @Column(unique = true)
     private String email;
-    @Size(min=8, max=12)
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
+
     @Size(min=10, max=10)
     private String phoneNumber;
-    @Size(min=50, max=500)
+
+    @Size(min=5, max=500)
     private String address;
-    private String role = "user";
+
+    private String role;
+
+    @JsonIgnore
+    @ManyToOne(cascade = CascadeType.REMOVE)
+    private Cart cart;
 
 }
